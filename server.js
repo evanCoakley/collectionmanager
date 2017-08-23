@@ -16,7 +16,7 @@ app.post("/comichero", function (req, res) {
     console.log(req.body);
     let newHero = new Hero(req.body);
 
-    newComic
+    newHero
         .save()
         .then(function (savedHero) {
             res.send(savedHero);
@@ -28,10 +28,10 @@ app.post("/comichero", function (req, res) {
 app.get("/comichero", function (req, res) {
     Hero.find()
         .then(function (foundHero) {
-            if (!foundComic) {
+            if (!foundHero) {
                 return res.send({ msg: "No Hero Found" })
             }
-            res.send(foundComics)
+            res.send(foundHero)
         })
         .catch(function (err) {
             res.status(500).send(err);
@@ -48,6 +48,35 @@ app.get("/comichero/:id", function (req, res) {
             res.send(foundHero);
         })
 })
+app.put("/comichero/:id", function (req, res) {
+    Hero.findByIdAndUpdate(req.params.id, req.body)
+        .then(function (updatedHero) {
+            if (!updatedHero) {
+                return res.send({ msg: "Could not update Hero" });
+            }
+
+            res.send(updatedHero);
+        })
+        .catch(function (err) {
+            res.status(500).send(err);
+        });
+});
+app.delete("/comichero/:id", function (req, res) {
+    Hero.findByIdAndRemove(req.params.id)
+        .then(function (message) {
+            res.send(message);
+        })
+        .catch(function (err) {
+            res.status(500).send(err);
+        });
+});
+app.delete("/comichero", function (req, res) {
+    Hero.remove()
+        .catch(function (err) {
+            res.status(500).send(err);
+        });
+});
+
 
 
 

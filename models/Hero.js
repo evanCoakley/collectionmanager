@@ -3,13 +3,18 @@ const Schema = mongoose.Schema;
 
 const HeroSchema = new Schema({
     heroName: String,
+    realName: String,
     comicUniverse: String,
     powers: {
         power1: String,
         power2: String,
+    },
 
-        origin: String,
-        enum: ["super-human", "above-average", "average", "below-average"]
+    ferocity: {
+        strength: {
+            type: String,
+            enum: ["super-natural", "above-average", "average", "poor"]
+        }
 
     },
     yearsActive: Number,
